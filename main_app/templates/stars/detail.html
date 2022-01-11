@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Star Details</h1>
+
+<div class='card'>
+    <div class='card-content'>
+        <span class="card-title">{{ star.name }}</span>
+        <p>Power Level: {{ star.powerlvl }}</p>
+        <p>Description: {{ star.description }}</p>
+        <p>Specialty: {{ star.specialty }}</p>
+    </div> 
+</div>
+
+{% endblock %}
