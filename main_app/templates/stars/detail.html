@@ -10,6 +10,10 @@
         <p>Description: {{ star.description }}</p>
         <p>Specialty: {{ star.specialty }}</p>
     </div> 
+    <div class="card-action">
+        <a href="{% url 'stars_update' star.id %}">Edit</a>
+        <a href="{% url 'stars_delete' star.id %}">Delete</a>
+      </div>
 </div>
 
 {% endblock %}
