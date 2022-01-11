@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Stars List</h1>
+
+{% for cat in cats %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ star.name }}</span>
+      <p>Powerlvl: {{ star.powerlvl }}</p>
+      <p>Description: {{ star.description }}</p>
+      <p>Specialty: {{ star.specialty }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}
