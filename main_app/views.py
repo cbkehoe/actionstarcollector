@@ -1,7 +1,9 @@
 from django.db.models import fields
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from .models import Star
+from .forms import WeaponForm
+from django.shortcuts import render, redirect
 
 
 from .models import Star
@@ -18,9 +20,16 @@ def stars_index(request):
 
 def stars_detail(request, star_id):
     star = Star.objects.get(id=star_id)
-    return render(request, 'stars/detail.html', {'star' : star})
+    weapon_form = WeaponForm()
+    return render(request, 'stars/detail.html', {'star' : star, 'weapon_form' : weapon_form})
 
-
+def add_weapon(request, star_id):
+    form = WeaponForm(request.POST)
+    if form.is_valid():
+        new_weapon = form.save(commit=False)
+        new_weapon.star_id = star_id
+        new_weapon.save()
+    return redirect('detail', star_id=star_id)
 #class based objects below
 
 class StarCreate(CreateView):
