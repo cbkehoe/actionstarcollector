@@ -20,8 +20,11 @@ def stars_index(request):
 
 def stars_detail(request, star_id):
     star = Star.objects.get(id=star_id)
+    vehicles_star_doesnt_have = Vehicle.ojects.exlude(id__in = star.vehicles.all().values_list('id'))
     weapon_form = WeaponForm()
-    return render(request, 'stars/detail.html', {'star' : star, 'weapon_form' : weapon_form})
+    return render(request, 'stars/detail.html', {
+        'star' : star, 'weapon_form' : weapon_form,
+        'vehicle' : vehicles_star_doesnt_have})
 
 def add_weapon(request, star_id):
     form = WeaponForm(request.POST)
