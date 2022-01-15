@@ -1,7 +1,9 @@
-from django.db.models import fields
+
+# from django.db.models import fields
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Star
+from django.views.generic import ListView, DetailView
+from .models import Star, Vehicle
 from .forms import WeaponForm
 from django.shortcuts import render, redirect
 
@@ -20,7 +22,7 @@ def stars_index(request):
 
 def stars_detail(request, star_id):
     star = Star.objects.get(id=star_id)
-    vehicles_star_doesnt_have = Vehicle.ojects.exlude(id__in = star.vehicles.all().values_list('id'))
+    vehicles_star_doesnt_have = Vehicle.objects.exclude(id__in = star.vehicles.all().values_list('id'))
     weapon_form = WeaponForm()
     return render(request, 'stars/detail.html', {
         'star' : star, 'weapon_form' : weapon_form,
@@ -35,6 +37,11 @@ def add_weapon(request, star_id):
     return redirect('detail', star_id=star_id)
 #class based objects below
 
+def assoc_vehicle(request, star_id, vehicle_id):
+  # Note that you can pass a toy's id instead of the whole toy object
+  Star.objects.get(id=star_id).vehicle.add(vehicle_id)
+  return redirect('detail', star_id=star_id)
+
 class StarCreate(CreateView):
     model = Star
     fields = '__all__'
@@ -46,3 +53,21 @@ class StarUpdate(UpdateView):
 class StarDelete(DeleteView):
     model = Star
     success_url = '/stars/'
+
+class VehicleList(ListView):
+    model = Vehicle
+
+class VehicleDetail(DetailView):
+    model = Vehicle
+
+class VehicleCreate(CreateView):
+    model = Vehicle
+    fields = '__all__'
+
+class VehicleUpdate(UpdateView):
+    model = Vehicle
+    fields = ['name', 'color']
+
+class VehicleDelete(DeleteView):
+    model = Vehicle
+    success_url = '/vehicles/'

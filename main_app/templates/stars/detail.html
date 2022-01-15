@@ -4,89 +4,90 @@
 <h1>Star Details</h1>
 
 <div class='card'>
-    <div class='card-content'>
-        <span class="card-title">{{ star.name }}</span>
-        <p>Power Level: {{ star.powerlvl }}</p>
-        <p>Description: {{ star.description }}</p>
-        <p>Specialty: {{ star.specialty }}</p>
-    </div>
-    <div class="card-action">
-        <a href="{% url 'stars_update' star.id %}">Edit</a>
-        <a href="{% url 'stars_delete' star.id %}">Delete</a>
-    </div>
-    <div class="col s6">
-            <form action="{% url 'add_weapon' star.id %}" method='post'>
-            {% csrf_token %}
-            {{ weapon_form.as_p }}
-            <input type="submit" class="btn" value="Add Weapon">
-          </form>
-          <br>
-          {% if star.armed %}
-            <div class="card-panel teal-text center-align">{{star.name}} is ready to roll</div>
-          {% else %}
-            <div class="card-panel red-text center-align">{{star.name}} needs to arm up</div>
-        {% endif %}
-        <table class="striped">
-            <thead>
-                <tr>
-                    <th>Weapons</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for weapon in star.weapon_set.all %}
-                <tr>
-                    
-                    <td>{{weapon.get_weaponry_display}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <div class='card-content'>
+    <span class="card-title">{{ star.name }}</span>
+    <p>Power Level: {{ star.powerlvl }}</p>
+    <p>Description: {{ star.description }}</p>
+    <p>Specialty: {{ star.specialty }}</p>
+  </div>
+  <div class="card-action">
+    <a href="{% url 'stars_update' star.id %}">Edit</a>
+    <a href="{% url 'stars_delete' star.id %}">Delete</a>
+  </div>
+  <div class="col s6">
+    <form action="{% url 'add_weapon' star.id %}" method='post'>
+      {% csrf_token %}
+      {{ weapon_form.as_p }}
+      <input type="submit" class="btn" value="Add Weapon">
+    </form>
+    <br>
+    {% if star.armed %}
+    <div class="card-panel teal-text center-align">{{star.name}} is ready to roll</div>
+    {% else %}
+    <div class="card-panel red-text center-align">{{star.name}} needs to arm up</div>
+    {% endif %}
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>Weapons</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for weapon in star.weapon_set.all %}
+        <tr>
+
+          <td>{{weapon.get_weaponry_display}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 <hr>
 <div class="row">
   <div class="col s6">
     <h3>{{ star.name }}'s Vehicles:</h3>
     {% if star.vehicle.count %}
-      {% for vehicle in star.vehicle.all %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">
-              A <span style="color: {{ vehicle.color }}">{{ vehicle.color }}</span> {{ vehicle.name }}
-            </span>
-          </div>
-        </div>
-      {% endfor %}
+    {% for vehicle in star.vehicles.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          A <span style="color: {{ vehicle.color }}">{{ vehicle.color }}</span> {{ vehicle.name }}
+        </span>
+      </div>
+
+    </div>
+    {% endfor %}
     {% else %}
-      <h5>No Vehicles - GET TO THE CHOPPA!!!</h5>
+    <h5>No Vehicles - GET TO THE CHOPPA!!!</h5>
     {% endif %}
   </div>
   <!-- Available toys will come after this line -->
   <div class="col s6">
     <h3>Available Vehicles</h3>
     {% if vehicles.count %}
-      {% for vehicle in vehicles.all %}
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">
-              A <span style="color: {{ vehicle.color }}">{{ vehicle.color }}</span> {{ vehicle.name }}
-            </span>
-          </div>
-          <div class="card-action">
-            <form action="" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn">Add</button>
-            </form>
-          </div>
-        </div>
+    {% for vehicle in vehicles.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          A <span style="color: {{ vehicle.color }}">{{ vehicle.color }}</span> {{ vehicle.name }}
+        </span>
+      </div>
+      <div class="card-action">
+        <form action="{% url 'assoc_vehicle' star.id vehicle.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn">Add</button>
+        </form>
+      </div>
+      
       {% endfor %}
-    {% else %}
+      {% else %}
       <h5>{{star.name}} Already Has All Vehicles</h5>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
-</div>
-<script>
-const selectEl = document.getElementById('id_weaponry');
-M.FormSelect.init(selectEl);
-</script>
-{% endblock %}
+  <script>
+    const selectEl = document.getElementById('id_weaponry');
+    M.FormSelect.init(selectEl);
+  </script>
+  {% endblock %}

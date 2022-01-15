@@ -12,6 +12,12 @@ class Vehicle(models.Model):
   name = models.CharField(max_length=50)
   color = models.CharField(max_length=20)
 
+  def __str__(self):
+      return self.name
+  
+  def get_absolute_url(self):
+      return reverse('vehicles_detail', kwargs={'pk' : self.id})
+
 class Star(models.Model):  # Note that parens are optional if not inheriting from another class
     name = models.CharField(max_length = 100) 
     powerlvl = models.IntegerField()
