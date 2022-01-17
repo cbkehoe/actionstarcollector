@@ -26,7 +26,7 @@ def stars_detail(request, star_id):
     weapon_form = WeaponForm()
     return render(request, 'stars/detail.html', {
         'star' : star, 'weapon_form' : weapon_form,
-        'vehicle' : vehicles_star_doesnt_have})
+        'vehicles' : vehicles_star_doesnt_have})
 
 def add_weapon(request, star_id):
     form = WeaponForm(request.POST)
@@ -39,7 +39,7 @@ def add_weapon(request, star_id):
 
 def assoc_vehicle(request, star_id, vehicle_id):
   # Note that you can pass a toy's id instead of the whole toy object
-  Star.objects.get(id=star_id).vehicle.add(vehicle_id)
+  Star.objects.get(id=star_id).vehicles.add(vehicle_id)
   return redirect('detail', star_id=star_id)
 
 class StarCreate(CreateView):
@@ -66,7 +66,7 @@ class VehicleCreate(CreateView):
 
 class VehicleUpdate(UpdateView):
     model = Vehicle
-    fields = ['name', 'color']
+    fields = '__all__'
 
 class VehicleDelete(DeleteView):
     model = Vehicle

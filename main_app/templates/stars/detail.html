@@ -47,7 +47,7 @@
 <div class="row">
   <div class="col s6">
     <h3>{{ star.name }}'s Vehicles:</h3>
-    {% if star.vehicle.count %}
+    {% if star.vehicles.count %}
     {% for vehicle in star.vehicles.all %}
     <div class="card">
       <div class="card-content">
@@ -62,7 +62,7 @@
     <h5>No Vehicles - GET TO THE CHOPPA!!!</h5>
     {% endif %}
   </div>
-  <!-- Available toys will come after this line -->
+  <!-- Available vehicles will come after this line -->
   <div class="col s6">
     <h3>Available Vehicles</h3>
     {% if vehicles.count %}
@@ -79,7 +79,7 @@
           <button type="submit" class="btn">Add</button>
         </form>
       </div>
-      
+
       {% endfor %}
       {% else %}
       <h5>{{star.name}} Already Has All Vehicles</h5>
