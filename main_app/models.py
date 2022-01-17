@@ -38,6 +38,7 @@ class Star(models.Model):  # Note that parens are optional if not inheriting fro
 class Weapon(models.Model):
     date =  models.DateField('Mission Date')
     weaponry = models.CharField(
+        'Weaponry Period',
         max_length=1,
         choices=WEAPONRY,
         default=WEAPONRY[0][0])

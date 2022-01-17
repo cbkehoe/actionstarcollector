@@ -11,6 +11,7 @@ urlpatterns = [
     path('stars/<int:pk>/delete', views.StarDelete.as_view(), name='stars_delete'),
     path('stars/<int:star_id>/add_weapon/', views.add_weapon, name='add_weapon'),
     path('stars/<int:star_id>/assoc_vehicle/<int:vehicle_id>/', views.assoc_vehicle, name='assoc_vehicle'),
+    path('stars/<int:star_id>/unassoc_vehicle/<int:vehicle_id>/', views.unassoc_vehicle, name='unassoc_vehicle'),
     path('vehicles/', views.VehicleList.as_view(), name='vehicles_index'),
     path('vehicles/<int:pk>/', views.VehicleDetail.as_view(), name='vehicles_detail'),
     path('vehicles/create/', views.VehicleCreate.as_view(), name='vehicles_create'),

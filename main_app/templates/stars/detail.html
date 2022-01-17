@@ -15,7 +15,7 @@
     <a href="{% url 'stars_delete' star.id %}">Delete</a>
   </div>
   <div class="col s6">
-    <form action="{% url 'add_weapon' star.id %}" method='post'>
+    <form action="{% url 'add_weapon' star.id %}" method='POST'>
       {% csrf_token %}
       {{ weapon_form.as_p }}
       <input type="submit" class="btn" value="Add Weapon">
@@ -28,16 +28,14 @@
     {% endif %}
     <table class="striped">
       <thead>
-        <tr>
-          <th>Weapons</th>
-        </tr>
+        <tr><th>Date</th><th>Weapon</th></tr>
       </thead>
       <tbody>
         {% for weapon in star.weapon_set.all %}
-        <tr>
-
-          <td>{{weapon.get_weaponry_display}}</td>
-        </tr>
+          <tr>
+            <td>{{weapon.date}}</td>
+            <td>{{weapon.get_weaponry_display}}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
@@ -55,7 +53,11 @@
           A <span style="color: {{ vehicle.color }}">{{ vehicle.color }}</span> {{ vehicle.name }}
         </span>
       </div>
-
+      <div class="card-action">
+        <form action="{% url 'unassoc_vehicle' star.id vehicle.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn">Remove</button>
+        </form>
     </div>
     {% endfor %}
     {% else %}
